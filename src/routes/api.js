@@ -1,6 +1,8 @@
 const express = require('express');
 
 const BlogController = require('../controllers/BlogController')
+const TeamController = require('../controllers/TeamController')
+const ServiceController = require('../controllers/ServiceController')
 
 
 const AuthVerification = require('../middlewares/AuthVerification')
@@ -16,9 +18,19 @@ router.delete('/DeleteOneBlog/:id', BlogController.DeleteOneBlog)
 router.put('/UpdateOneBlog/:id', BlogController.UpdateOneBlog)
 
 
+//! Team Routes
+router.post('/CreateTeam', TeamController.CreateTeam)
+router.get('/GetAllTeams', TeamController.GetAllTeams)
+router.get('/GetOneTeam/:id', TeamController.GetOneTeam)
+router.delete('/DeleteOneTeam/:id', TeamController.DeleteOneTeam)
+router.put('/UpdateOneTeam/:id', TeamController.UpdateOneTeam)
+
 //! Service Routes
-
-
+router.post('/CreateService', ServiceController.CreateService)
+router.get('/GetAllServices', ServiceController.GetAllServices)
+router.get('/GetOneService/:id', ServiceController.GetOneService)
+router.delete('/DeleteOneService/:id', ServiceController.DeleteOneService)
+router.put('/UpdateOneService/:id', ServiceController.UpdateOneService)
 
 // User
 //router.get('/UserOTP/:email', UserController.UserOTP)

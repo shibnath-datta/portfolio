@@ -13,9 +13,6 @@ const ServiceSection = () => {
                 <span className="text-yellow-500">Services</span> I Provide
               </h2>
             </div>
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md flex items-center gap-2 shadow-md">
-              View All Services <span>➡️</span>
-            </button>
           </div>
 
           {/* Services Cards */}

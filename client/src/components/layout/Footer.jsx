@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Left Side: Footer Text */}
           <p className="text-white text-sm md:text-base">
-            © {new Date().getFullYear()} Your Company. All Rights Reserved.
+            © {new Date().getFullYear()} Shib Nath Datta. All Rights Reserved.
           </p>
 
           {/* Right Side: Social Icons */}

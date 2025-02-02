@@ -12,7 +12,7 @@ const MenuBar = () => {
             <div className="col-span-12 sm:col-span-3 flex justify-center sm:justify-start">
               <div className="logo">
                 <img
-                  className="w-[100px] sm:w-[100px]"
+                  className="w-[50px] sm:w-[50px]"
                   src="/img/logo.png"
                   alt="Logo"
                 />
