@@ -3,6 +3,7 @@ const express = require('express');
 const BlogController = require('../controllers/BlogController')
 const TeamController = require('../controllers/TeamController')
 const ServiceController = require('../controllers/ServiceController')
+const UsersController = require('../controllers/UserControllers')
 
 
 const AuthVerification = require('../middlewares/AuthVerification')
@@ -33,6 +34,11 @@ router.delete('/DeleteOneService/:id', ServiceController.DeleteOneService)
 router.put('/UpdateOneService/:id', ServiceController.UpdateOneService)
 
 // User
+
+//! User api
+router.post("/register", UsersController.register)
+router.post("/login", UsersController.loginUser)
+router.get("/logout", UsersController.logoutUser)
 //router.get('/UserOTP/:email', UserController.UserOTP)
 //router.get('/VerifyLogin/:email/:otp', UserController.VerifyLogin)
 //router.get('/UserLogout', AuthVerification, UserController.UserLogout)

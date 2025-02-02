@@ -28,7 +28,7 @@ mongoose.connect(DATABASE, { autoIndex: true }).then(() => {
 
 
 app.use(cookieParser());
-app.use(cors())
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }))
 app.use(helmet())
 app.use(mongoSanitize())
 app.use(xss())

@@ -6,6 +6,7 @@ import AboutPage from "./page/AboutPage";
 import BlogPage from "./page/BlogPage";
 import ServicePage from "./page/ServicePage";
 import ContactPage from "./page/ContactPage";
+import LoginPage from "./page/LoginPage";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
             </Layout>
           }
         />
+        <Route exact path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
