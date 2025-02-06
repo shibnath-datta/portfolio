@@ -31,16 +31,16 @@ const ContractSection = () => {
               <ul className="space-y-4">
                 <li className="flex items-center gap-4">
                   <i className="fas fa-phone-alt text-yellow-500 text-lg"></i>
-                  <span className="text-gray-700">+1 (234) 567-890</span>
+                  <span className="text-gray-700">+88 01710403033</span>
                 </li>
                 <li className="flex items-center gap-4">
                   <i className="fas fa-envelope text-yellow-500 text-lg"></i>
-                  <span className="text-gray-700">info@example.com</span>
+                  <span className="text-gray-700">info@gmail.com</span>
                 </li>
                 <li className="flex items-center gap-4">
                   <i className="fas fa-map-marker-alt text-yellow-500 text-lg"></i>
                   <span className="text-gray-700">
-                    123 Main Street, City, USA
+                    140/A, Uttara, Dhaka, Bangladesh
                   </span>
                 </li>
               </ul>

@@ -3,7 +3,6 @@ import BlogStore from "../store/BlogStore";
 
 const BlogSection = () => {
   const { BlogList } = BlogStore();
-  console.log(BlogList);
 
   if (BlogList === null) {
     return <div>Loading...</div>;

@@ -12,26 +12,39 @@ const LoginForm = () => {
   let [data, setData] = useState({ email: "", password: "" });
 
   //login Function
-  let submitData = async () => {
+  const submitData = async () => {
+    // Validate email and password fields
     if (IsEmpty(data.email)) {
       ErrorToast("Email is required");
-    } else if (IsEmpty(data.password)) {
+      return;
+    }
+    if (IsEmpty(data.password)) {
       ErrorToast("Password is required");
-    } else {
-      console.log(data.email, data.password);
-      setLoading(true);
+      return;
+    }
 
-      //API Call
-      let result = await LoginRequest(data);
+    console.log(data.email, data.password);
+    setLoading(true);
+    // Login Api function is called here
+    try {
+      const result = await LoginRequest(data);
 
       if (result === true) {
-        setLoading(false);
-        navigate("/"); // Window not reload
-        //window.location.href = "/"; // Window reload
+        // Navigate without reloading the window
+        navigate("/dashboard");
+        // If you want to force reload, you could use:
+        // window.location.href = "/";
       } else {
-        setLoading(false);
-        ErrorToast("Login Fail");
+        console.log(result);
+        ErrorToast("Password Incorrect or Email Incorrect");
       }
+    } catch (error) {
+      console.error("Login error details:", error.response);
+      console.log(error.response.data.message);
+      setLoading(false);
+      ErrorToast(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 

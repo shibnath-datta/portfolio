@@ -7,6 +7,13 @@ import BlogPage from "./page/BlogPage";
 import ServicePage from "./page/ServicePage";
 import ContactPage from "./page/ContactPage";
 import LoginPage from "./page/LoginPage";
+import DasLayout from "./components/dashboard/dasLayout/DasLayout";
+import DashboardPage from "./page/DashboardPage";
+import BlogListPage from "./page/BlogListPage";
+import TeamListPage from "./page/TeamListPage";
+import ServiceListPage from "./page/ServiceListPage";
+import BlogAddPage from "./page/BlogAddPage";
+import BlogUpdate from "./components/dashboard/blog/BlogUpdate";
 
 function App() {
   return (
@@ -58,6 +65,60 @@ function App() {
           }
         />
         <Route exact path="/login" element={<LoginPage />} />
+        <Route
+          exact
+          path="/dashboard"
+          element={
+            <DasLayout>
+              <DashboardPage />
+            </DasLayout>
+          }
+        />
+        <Route
+          exact
+          path="/blog-list"
+          element={
+            <DasLayout>
+              <BlogListPage />
+            </DasLayout>
+          }
+        />
+        <Route
+          exact
+          path="/team-list"
+          element={
+            <DasLayout>
+              <TeamListPage />
+            </DasLayout>
+          }
+        />
+        <Route
+          exact
+          path="/service-list"
+          element={
+            <DasLayout>
+              <ServiceListPage />
+            </DasLayout>
+          }
+        />
+        <Route
+          exact
+          path="/blog-add"
+          element={
+            <DasLayout>
+              <BlogAddPage />
+            </DasLayout>
+          }
+        />
+        <Route
+          exact
+          path="/blog-update/:id"
+          element={
+            <DasLayout>
+              <BlogUpdate />
+            </DasLayout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

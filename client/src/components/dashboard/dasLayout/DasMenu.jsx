@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const MenuBar = () => {
+export const DasMenu = () => {
   return (
     <>
       <section className="bg-gray-50 shadow-xl h-[120px] flex items-center sm:h-[80px] fixed top-0 left-0 w-full z-50">
@@ -24,7 +24,7 @@ const MenuBar = () => {
                 <ul className="flex flex-wrap gap-4">
                   <li>
                     <NavLink
-                      to="/"
+                      to="/dashboard"
                       className={({ isActive }) =>
                         `px-4 py-2 rounded-md transition duration-300 ${
                           isActive
@@ -33,26 +33,12 @@ const MenuBar = () => {
                         }`
                       }
                     >
-                      Home
+                      Dashboard
                     </NavLink>
                   </li>
                   <li>
                     <NavLink
-                      to="/about"
-                      className={({ isActive }) =>
-                        `px-4 py-2 rounded-md transition duration-300 ${
-                          isActive
-                            ? "bg-gray-700 text-white"
-                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                        }`
-                      }
-                    >
-                      About
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/blog"
+                      to="/blog-list"
                       className={({ isActive }) =>
                         `px-4 py-2 rounded-md transition duration-300 ${
                           isActive
@@ -66,7 +52,21 @@ const MenuBar = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/service"
+                      to="/team-list"
+                      className={({ isActive }) =>
+                        `px-4 py-2 rounded-md transition duration-300 ${
+                          isActive
+                            ? "bg-gray-700 text-white"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`
+                      }
+                    >
+                      Team
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/service-list"
                       className={({ isActive }) =>
                         `px-4 py-2 rounded-md transition duration-300 ${
                           isActive
@@ -78,20 +78,6 @@ const MenuBar = () => {
                       Service
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink
-                      to="/contact"
-                      className={({ isActive }) =>
-                        `px-4 py-2 rounded-md transition duration-300 ${
-                          isActive
-                            ? "bg-gray-700 text-white"
-                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                        }`
-                      }
-                    >
-                      Contact
-                    </NavLink>
-                  </li>
                 </ul>
               </nav>
             </div>
@@ -101,5 +87,3 @@ const MenuBar = () => {
     </>
   );
 };
-
-export default MenuBar;

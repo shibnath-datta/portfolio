@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 function LoginPage() {
   return (
     <>
-      <Toaster />
+      <Toaster position="bottom-center" reverseOrder={false} />
       {/* LoginForm */}
       <LoginForm />
     </>
