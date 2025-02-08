@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ServiceStore from "../../../store/ServiceStore";
+import FileUploadStore from "../../../store/FileUploadStore"; // File upload store with uploadImage()
 import { SuccessToast, ErrorToast, IsEmpty } from "../../../utility/Helper";
 
 export const ServiceList = () => {
@@ -11,12 +12,15 @@ export const ServiceList = () => {
     ServiceAddRequest,
   } = ServiceStore();
 
+  // Destructure the uploadImage function from the file upload store.
+  const { uploadImage } = FileUploadStore();
+
   // State for inline editing an existing service
   const [editingId, setEditingId] = useState(null);
   const [editFormData, setEditFormData] = useState({
     title: "",
     description: "",
-    icon: "",
+    icon: "", // This will store either the existing URL or a File object when updated.
   });
 
   // State for inline adding a new service
@@ -24,7 +28,7 @@ export const ServiceList = () => {
   const [addFormData, setAddFormData] = useState({
     title: "",
     description: "",
-    icon: "",
+    icon: "", // This will store either the URL (after upload) or a File object
   });
 
   // Remove service and refresh list with confirmation
@@ -47,17 +51,25 @@ export const ServiceList = () => {
     setEditFormData({
       title: item.title,
       description: item.description,
-      icon: item.icon,
+      icon: item.icon, // This is the existing icon URL.
     });
   };
 
   // Handle changes for inline editing
   const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value, files } = e.target;
+    if (name === "icon" && files && files[0]) {
+      // Store the file object if a new file is selected.
+      setEditFormData((prev) => ({
+        ...prev,
+        icon: files[0],
+      }));
+    } else {
+      setEditFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   // Save the updated service and refresh the list
@@ -73,7 +85,19 @@ export const ServiceList = () => {
     if (!window.confirm("Are you sure you want to update this service?")) {
       return;
     }
-    const result = await ServiceUpdateRequest(id, editFormData);
+    let updatedData = { ...editFormData };
+
+    // If the icon field holds a File object, upload it first.
+    if (editFormData.icon instanceof File) {
+      try {
+        const iconUrl = await uploadImage(editFormData.icon);
+        updatedData.icon = iconUrl;
+      } catch (error) {
+        ErrorToast("Icon upload failed.");
+        return;
+      }
+    }
+    const result = await ServiceUpdateRequest(id, updatedData);
     if (result) {
       await ServiceListRequest();
       setEditingId(null);
@@ -95,11 +119,18 @@ export const ServiceList = () => {
 
   // Handle changes for inline adding
   const handleAddChange = (e) => {
-    const { name, value } = e.target;
-    setAddFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value, files } = e.target;
+    if (name === "icon" && files && files[0]) {
+      setAddFormData((prev) => ({
+        ...prev,
+        icon: files[0],
+      }));
+    } else {
+      setAddFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   // Save the new service and refresh the list
@@ -115,7 +146,19 @@ export const ServiceList = () => {
     if (!window.confirm("Are you sure you want to add this service?")) {
       return;
     }
-    const result = await ServiceAddRequest(addFormData);
+    let dataToSubmit = { ...addFormData };
+
+    // If the icon field holds a File object, upload it first.
+    if (addFormData.icon instanceof File) {
+      try {
+        const iconUrl = await uploadImage(addFormData.icon);
+        dataToSubmit.icon = iconUrl;
+      } catch (error) {
+        ErrorToast("Icon upload failed.");
+        return;
+      }
+    }
+    const result = await ServiceAddRequest(dataToSubmit);
     if (result) {
       await ServiceListRequest();
       setIsAdding(false);
@@ -194,11 +237,9 @@ export const ServiceList = () => {
                 </td>
                 <td className="px-6 py-4 text-sm">
                   <input
-                    type="text"
+                    type="file"
                     name="icon"
-                    value={addFormData.icon}
                     onChange={handleAddChange}
-                    placeholder="Enter icon URL"
                     className="w-full border rounded px-2 py-1"
                   />
                 </td>
@@ -249,15 +290,14 @@ export const ServiceList = () => {
                 <td className="px-6 py-4">
                   {editingId === item._id ? (
                     <input
-                      type="text"
+                      type="file"
                       name="icon"
-                      value={editFormData.icon}
                       onChange={handleEditChange}
                       className="w-full border rounded px-2 py-1"
                     />
                   ) : (
                     <img
-                      src={item.icon}
+                      src={`/api/v1/upload/` + item.icon}
                       alt={item.title}
                       className="h-10 w-10 rounded object-cover"
                     />

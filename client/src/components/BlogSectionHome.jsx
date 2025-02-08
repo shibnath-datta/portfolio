@@ -39,7 +39,7 @@ function BlogSectionHome() {
                   >
                     <div className="mb-4 flex justify-center">
                       <img
-                        src={item.image}
+                        src={`/api/v1/upload/` + item.image}
                         alt={item.title}
                         className="w-full"
                       />

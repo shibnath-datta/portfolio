@@ -1,7 +1,10 @@
 import toast from "react-hot-toast";
 
 
+
 class FormHelper {
+
+
   IsEmpty(value) {
     return value.length === 0; // true if get empty
   }

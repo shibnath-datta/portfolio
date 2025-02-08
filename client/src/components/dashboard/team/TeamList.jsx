@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import TeamStore from "../../../store/TeamStore";
+import FileUploadStore from "../../../store/FileUploadStore"; // Centralized file upload logic
 import { SuccessToast, ErrorToast, IsEmpty } from "../../../utility/Helper";
 
-// Helper function to transform form data into the schema format
+// Helper function to transform flat form data into the nested structure expected by your backend.
 const transformTeamData = (data) => ({
   name: data.name,
   position: data.position,
@@ -24,19 +25,22 @@ export const TeamList = () => {
     TeamAddRequest,
   } = TeamStore();
 
-  // State for inline editing an existing team member
+  // Get the uploadImage function from FileUploadStore.
+  const { uploadImage } = FileUploadStore();
+
+  // State for inline editing an existing team member.
   const [editingId, setEditingId] = useState(null);
   const [editFormData, setEditFormData] = useState({
     name: "",
     position: "",
     bio: "",
-    image: "",
+    image: "", // This field will either hold the current image URL or a File object if changed.
     facebook: "",
     twitter: "",
     linkedin: "",
   });
 
-  // State for inline adding a new team member
+  // State for inline adding a new team member.
   const [isAdding, setIsAdding] = useState(false);
   const [addFormData, setAddFormData] = useState({
     name: "",
@@ -48,7 +52,7 @@ export const TeamList = () => {
     linkedin: "",
   });
 
-  // Remove team member and refresh list with confirmation
+  // Remove team member with confirmation.
   const onRemove = async (id) => {
     if (!window.confirm("Are you sure you want to remove this team member?")) {
       return;
@@ -62,30 +66,38 @@ export const TeamList = () => {
     }
   };
 
-  // Start editing a row: populate form with current values
+  // Start editing: populate editFormData with the selected team member's data.
   const onEditClick = (item) => {
     setEditingId(item._id);
     setEditFormData({
       name: item.name,
       position: item.position,
       bio: item.bio,
-      image: item.image,
+      image: item.image, // Use the existing image URL.
       facebook: item.socialLinks ? item.socialLinks.facebook : "",
       twitter: item.socialLinks ? item.socialLinks.twitter : "",
       linkedin: item.socialLinks ? item.socialLinks.linkedin : "",
     });
   };
 
-  // Handle changes for inline editing
+  // Handle change events for inline editing.
   const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value, files } = e.target;
+    if (name === "image" && files && files[0]) {
+      // If the "image" input is a file input, store the File object.
+      setEditFormData((prev) => ({
+        ...prev,
+        image: files[0],
+      }));
+    } else {
+      setEditFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
-  // Save the updated team member and refresh the list
+  // Save the updated team member.
   const onSaveEdit = async (id) => {
     if (
       IsEmpty(editFormData.name) ||
@@ -98,7 +110,18 @@ export const TeamList = () => {
     if (!window.confirm("Are you sure you want to update this team member?")) {
       return;
     }
-    const transformedData = transformTeamData(editFormData);
+    let updatedData = { ...editFormData };
+    // If the image is a File, upload it first.
+    if (editFormData.image instanceof File) {
+      try {
+        const imageUrl = await uploadImage(editFormData.image);
+        updatedData.image = imageUrl;
+      } catch (error) {
+        ErrorToast("image upload failed.");
+        return;
+      }
+    }
+    const transformedData = transformTeamData(updatedData);
     const result = await TeamUpdateRequest(id, transformedData);
     if (result) {
       await TeamListRequest();
@@ -109,7 +132,7 @@ export const TeamList = () => {
     }
   };
 
-  // Cancel inline editing
+  // Cancel editing.
   const onCancelEdit = () => {
     setEditingId(null);
     setEditFormData({
@@ -123,16 +146,23 @@ export const TeamList = () => {
     });
   };
 
-  // Handle changes for inline adding
+  // Handle change events for inline adding.
   const handleAddChange = (e) => {
-    const { name, value } = e.target;
-    setAddFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value, files } = e.target;
+    if (name === "image" && files && files[0]) {
+      setAddFormData((prev) => ({
+        ...prev,
+        image: files[0],
+      }));
+    } else {
+      setAddFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
-  // Save the new team member and refresh the list
+  // Save the new team member.
   const onSaveAdd = async () => {
     if (
       IsEmpty(addFormData.name) ||
@@ -145,7 +175,18 @@ export const TeamList = () => {
     if (!window.confirm("Are you sure you want to add this team member?")) {
       return;
     }
-    const transformedData = transformTeamData(addFormData);
+    let dataToSubmit = { ...addFormData };
+    // If the image is a File, upload it first.
+    if (addFormData.image instanceof File) {
+      try {
+        const imageUrl = await uploadImage(addFormData.image);
+        dataToSubmit.image = imageUrl;
+      } catch (error) {
+        ErrorToast("image upload failed.");
+        return;
+      }
+    }
+    const transformedData = transformTeamData(dataToSubmit);
     const result = await TeamAddRequest(transformedData);
     if (result) {
       await TeamListRequest();
@@ -165,7 +206,7 @@ export const TeamList = () => {
     }
   };
 
-  // Cancel adding a new team member
+  // Cancel adding.
   const onCancelAdd = () => {
     setIsAdding(false);
     setAddFormData({
@@ -212,7 +253,7 @@ export const TeamList = () => {
                 Bio
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Image
+                image
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Social Links
@@ -257,11 +298,9 @@ export const TeamList = () => {
                 </td>
                 <td className="px-6 py-4 text-sm">
                   <input
-                    type="text"
+                    type="file"
                     name="image"
-                    value={addFormData.image}
                     onChange={handleAddChange}
-                    placeholder="Image URL"
                     className="w-full border rounded px-2 py-1"
                   />
                 </td>
@@ -351,15 +390,14 @@ export const TeamList = () => {
                 <td className="px-6 py-4">
                   {editingId === item._id ? (
                     <input
-                      type="text"
+                      type="file"
                       name="image"
-                      value={editFormData.image}
                       onChange={handleEditChange}
                       className="w-full border rounded px-2 py-1"
                     />
                   ) : (
                     <img
-                      src={item.image}
+                      src={`/api/v1/upload/` + item.image}
                       alt={item.name}
                       className="h-10 w-10 rounded object-cover"
                     />

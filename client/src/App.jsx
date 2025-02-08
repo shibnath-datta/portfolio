@@ -12,8 +12,7 @@ import DashboardPage from "./page/DashboardPage";
 import BlogListPage from "./page/BlogListPage";
 import TeamListPage from "./page/TeamListPage";
 import ServiceListPage from "./page/ServiceListPage";
-import BlogAddPage from "./page/BlogAddPage";
-import BlogUpdate from "./components/dashboard/blog/BlogUpdate";
+import PrivateRouter from "./components/PrivateRouter";
 
 function App() {
   return (
@@ -65,58 +64,51 @@ function App() {
           }
         />
         <Route exact path="/login" element={<LoginPage />} />
+
         <Route
           exact
           path="/dashboard"
           element={
-            <DasLayout>
-              <DashboardPage />
-            </DasLayout>
+            <PrivateRouter>
+              <DasLayout>
+                <DashboardPage />
+              </DasLayout>
+            </PrivateRouter>
           }
         />
         <Route
           exact
           path="/blog-list"
           element={
-            <DasLayout>
-              <BlogListPage />
-            </DasLayout>
+            <PrivateRouter>
+              <DasLayout>
+                <BlogListPage />
+              </DasLayout>
+            </PrivateRouter>
           }
         />
+
         <Route
           exact
           path="/team-list"
           element={
-            <DasLayout>
-              <TeamListPage />
-            </DasLayout>
+            <PrivateRouter>
+              <DasLayout>
+                <TeamListPage />
+              </DasLayout>
+            </PrivateRouter>
           }
         />
+
         <Route
           exact
           path="/service-list"
           element={
-            <DasLayout>
-              <ServiceListPage />
-            </DasLayout>
-          }
-        />
-        <Route
-          exact
-          path="/blog-add"
-          element={
-            <DasLayout>
-              <BlogAddPage />
-            </DasLayout>
-          }
-        />
-        <Route
-          exact
-          path="/blog-update/:id"
-          element={
-            <DasLayout>
-              <BlogUpdate />
-            </DasLayout>
+            <PrivateRouter>
+              <DasLayout>
+                <ServiceListPage />
+              </DasLayout>
+            </PrivateRouter>
           }
         />
       </Routes>

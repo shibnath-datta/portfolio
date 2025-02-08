@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const TeamModel = require('../models/TeamModel');
+const { deleteImageFile } = require('../utility/fileHelper');
 
 
 const ObjectId = mongoose.Types.ObjectId;
@@ -9,8 +10,6 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const CreateTeamService = async (req, res) => {
   try {
-
-    //const { title, content, image, author } = req.body;
     let reqBody = req.body;
     await TeamModel.create(reqBody);
     return ({ status: "success", "message": "Team Create Successfully" })
@@ -25,11 +24,7 @@ const TeamListOneService = async (req) => {
   try {
 
     let id = new ObjectId(req.params.id);
-
-    // Step 1 -- no exiting user
     let existingTeam = await TeamModel.findOne({ _id: id });
-    console.log(id)
-
     return ({ status: "success", data: existingTeam })
   } catch (err) {
     return ({ status: "fail", "Message": err.toString() })
@@ -52,10 +47,15 @@ const TeamListService = async () => {
 
 const TeamDeleteService = async (req) => {
   try {
+    let teamID = new ObjectId(req.params.id);
 
-    let id = new ObjectId(req.params.id);
+    // Find the current team document
+    const team = await TeamModel.findById(teamID);
+    if (!team) throw new Error("team not found");
 
-    await TeamModel.deleteOne({ _id: id });
+    deleteImageFile(team.image);
+
+    await TeamModel.deleteOne({ _id: teamID });
 
     return ({ status: "success", "message": "Team Delete Successfully" })
   } catch (err) {
@@ -67,9 +67,17 @@ const TeamDeleteService = async (req) => {
 
 const TeamUpdateService = async (req) => {
   try {
-
     let teamID = new ObjectId(req.params.id);
+
+    // Find the current team document
+    const team = await TeamModel.findById(teamID);
+    if (!team) throw new Error("Team not found");
+
     let reqBody = req.body;
+
+    if (reqBody.image && reqBody.image !== team.image) {
+      deleteImageFile(team.image);
+    }
 
     await TeamModel.updateOne({ _id: teamID }, { $set: reqBody });
 

@@ -13,12 +13,9 @@ exports.DecodeToken = (token) => {
         let KEY = "123-ABC-XYZ";
         let expire = { expiresIn: '24h' };
         let decoded = jwt.verify(token, KEY);
-
-
-        // Refresh token add
         if (!!decoded.email === true) {
-            let RefreshToken = jwt.sign({ email: decoded.email }, key, { expiresIn: expire })
-            return { RefreshToken, email: decoded.email };
+            //let RefreshToken = jwt.sign({ email: decoded.email }, KEY, { expiresIn: expire })
+            return { email: decoded.email };
         }
     }
     catch (e) {

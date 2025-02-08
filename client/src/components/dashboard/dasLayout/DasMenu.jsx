@@ -1,7 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Cookies from "js-cookie";
+import UserStore from "../../../store/UserStore";
 
 export const DasMenu = () => {
+  let isLogin = Cookies.get("token");
+  const { LogoutRequest } = UserStore();
+  let logoutFunction = async () => {
+    await LogoutRequest();
+    window.location.reload();
+  };
+
   return (
     <>
       <section className="bg-gray-50 shadow-xl h-[120px] flex items-center sm:h-[80px] fixed top-0 left-0 w-full z-50">
@@ -77,6 +86,25 @@ export const DasMenu = () => {
                     >
                       Service
                     </NavLink>
+                  </li>
+                  <li>
+                    {!!isLogin === true ? (
+                      <NavLink
+                        onClick={logoutFunction}
+                        to="/"
+                        className={({ isActive }) =>
+                          `px-4 py-2 rounded-md transition duration-300 ${
+                            isActive
+                              ? "bg-gray-700 text-white"
+                              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                          }`
+                        }
+                      >
+                        Logout
+                      </NavLink>
+                    ) : (
+                      <></>
+                    )}
                   </li>
                 </ul>
               </nav>

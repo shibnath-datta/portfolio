@@ -8,6 +8,12 @@ const UserStore = create((set) => ({
     return res?.data['status'] === "success";
   },
 
+
+  LogoutRequest: async () => {
+    let res = await axios.get(`/api/v1/logout`, { withCredentials: true });
+    return res?.data['status'] === "success";
+  },
+
 }))
 
 export default UserStore;

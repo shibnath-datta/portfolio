@@ -34,18 +34,13 @@ const loginService = async (req, res) => {
     if (!existingUser) {
       return ({ code: 400, status: "fail", "message": `Email Incorrect` });
     }
-
     let reqBody = req.body;
     let data = await UserModel.aggregate([
       { $match: reqBody },
       { $project: { _id: 1, email: 1 } },
     ]);
 
-
-
-
     if (data.length === 1) {
-
       // Step 2 Token Create
       let token = EncodeToken(data[0]["email"]);
 
@@ -57,19 +52,12 @@ const loginService = async (req, res) => {
         secure: true,
         path: "/"
       };
-      //console.log(token);
       res.cookie('token', token, options);
-      console.log(token);
       return ({ code: 200, status: "success", token, message: "Login successfully" });
-
     } else {
       return ({ code: 400, status: "fail", "message": `Password incorrect` });
     }
-
-    //return ({ status: "success", "message": "Login successfully" })
   } catch (err) {
-
-
     return ({ code: 400, status: "fail", message: "Login Fail" });
   }
 

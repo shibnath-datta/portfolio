@@ -33,9 +33,9 @@ const BlogSection = () => {
                   >
                     <div className="mb-4 flex justify-center">
                       <img
-                        src={item.image}
+                        src={`/api/v1/upload/` + item.image}
                         alt={item.title}
-                        className="w-full"
+                        className="w-full h-48 object-cover rounded-lg"
                       />
                     </div>
                     <h3 className="text-lg font-semibold mb-2">{item.title}</h3>

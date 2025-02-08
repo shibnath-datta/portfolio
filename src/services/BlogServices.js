@@ -1,3 +1,4 @@
+const { deleteImageFile } = require('../utility/fileHelper');
 const BlogModel = require('../models/BlogModel')
 const mongoose = require('mongoose');
 
@@ -9,8 +10,6 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const CreateBlogService = async (req, res) => {
   try {
-
-    //const { title, content, image, author } = req.body;
     let reqBody = req.body;
     await BlogModel.create(reqBody);
     return ({ status: "success", "message": "Blog Create Successfully" })
@@ -25,11 +24,7 @@ const BlogListOneService = async (req) => {
   try {
 
     let id = new ObjectId(req.params.id);
-
-    // Step 1 -- no exiting user
     let existingBlog = await BlogModel.findOne({ _id: id });
-    console.log(id)
-
     return ({ status: "success", data: existingBlog })
   } catch (err) {
     return ({ status: "fail", "Message": err.toString() })
@@ -52,11 +47,15 @@ const BlogListService = async () => {
 
 const BlogDeleteService = async (req) => {
   try {
+    let blogID = new ObjectId(req.params.id);
+    // Find the current blog document
 
-    let id = new ObjectId(req.params.id);
+    const blog = await BlogModel.findById(blogID);
 
-    await BlogModel.deleteOne({ _id: id });
+    if (!blog) throw new Error("Blog not found");
+    deleteImageFile(blog.image);
 
+    await BlogModel.deleteOne({ _id: blogID });
     return ({ status: "success", "message": "Blog Delete Successfully" })
   } catch (err) {
     return ({ status: "fail", "Message": err.toString() })
@@ -69,7 +68,17 @@ const BlogUpdateService = async (req) => {
   try {
 
     let blogID = new ObjectId(req.params.id);
+    // Find the current blog document
+    const blog = await BlogModel.findById(blogID);
+    if (!blog) throw new Error("Blog not found");
+
     let reqBody = req.body;
+
+    if (reqBody.image && reqBody.image !== blog.image) {
+
+      deleteImageFile(blog.image);
+    }
+
 
     await BlogModel.updateOne({ _id: blogID }, { $set: reqBody });
 

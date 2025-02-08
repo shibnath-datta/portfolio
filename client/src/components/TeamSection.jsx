@@ -38,7 +38,7 @@ const TeamSection = () => {
                       className="bg-gray-50 rounded-lg shadow-md p-6 text-center"
                     >
                       <img
-                        src={item.image}
+                        src={`/api/v1/upload/` + item.image}
                         alt="Team Member"
                         className="w-32 h-32 mx-auto rounded-full mb-4"
                       />

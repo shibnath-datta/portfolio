@@ -34,7 +34,7 @@ const ServiceSection = () => {
                     >
                       <div className="mb-4 flex justify-center">
                         <img
-                          src={item.icon}
+                          src={`/api/v1/upload/` + item.icon}
                           alt="UI/UX Design"
                           className="w-16 h-16"
                         />
