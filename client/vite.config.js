@@ -8,10 +8,8 @@ export default defineConfig(
     plugins: [react(), tailwindcss()],
     server: {
       proxy: {
-        '/api': {
-          target: "https://portfolio-back-henna.vercel.app",
-          changeOrigin: true,
-          secure: false,
+        '/api/': {
+          target: "http://localhost:5030"
         }
       }
     }
