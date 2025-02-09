@@ -35,7 +35,7 @@ const BlogSection = () => {
                       <img
                         src={`/api/v1/upload/` + item.image}
                         alt={item.title}
-                        className="w-full h-48 object-cover rounded-lg"
+                        className="w-full object-cover rounded-lg"
                       />
                     </div>
                     <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
