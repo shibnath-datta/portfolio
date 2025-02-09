@@ -9,7 +9,9 @@ export default defineConfig(
     server: {
       proxy: {
         '/api/': {
-          target: "https://portfolio-front-taupe.vercel.app/"
+          target: "http://localhost:5030",
+          changeOrigin: true,
+          secure: false,
         }
       }
     }
