@@ -9,7 +9,9 @@ export default defineConfig(
     server: {
       proxy: {
         '/api/': {
-          target: "https://portfolio-back-henna.vercel.app"
+          target: "https://portfolio-back-henna.vercel.app",
+          changeOrigin: true,
+          secure: false,
         }
       }
     }
