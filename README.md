@@ -1,6 +1,6 @@
-live link: https://portfolio-l5jv.onrender.com/
+live link: https://portfolio-shibnath.up.railway.app
 server link:
 
-Login Router: https://portfolio-l5jv.onrender.com/login
+Login Router: https://portfolio-shibnath.up.railway.app/login, http://localhost:5173/login
 Email: shibnath2@gmail.com
 Pass: securePassword123
