@@ -4,6 +4,7 @@ const BlogController = require('../controllers/BlogController')
 const TeamController = require('../controllers/TeamController')
 const ServiceController = require('../controllers/ServiceController')
 const UsersController = require('../controllers/UserControllers')
+const ContactController = require('../controllers/ContactController')
 const FileUploadController = require('../controllers/FileUploadController')
 
 
@@ -35,8 +36,10 @@ router.get('/GetOneService/:id', ServiceController.GetOneService)
 router.delete('/DeleteOneService/:id', AuthVerification, ServiceController.DeleteOneService)
 router.put('/UpdateOneService/:id', AuthVerification, ServiceController.UpdateOneService)
 
+//! Contact Massage Routes
+router.post('/CreateContact', ContactController.CreateContact)
 
-
+router.get('/GetAllContacts', ContactController.GetAllContacts)
 
 //! User api
 router.post("/register", UsersController.register)

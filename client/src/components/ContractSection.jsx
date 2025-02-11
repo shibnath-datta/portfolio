@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import ContactStore from "../store/ContactStore";
 
 const ContractSection = () => {
+  const { ContactAddRequest } = ContactStore();
+  const [addFormData, setAddFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setAddFormData({
+      ...addFormData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      ContactAddRequest(addFormData);
+      setAddFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(addFormData);
+  };
+
   return (
     <>
       <section className="bg-gray-50 py-10 md:py-20">
@@ -51,7 +82,7 @@ const ContractSection = () => {
               <h3 className="text-2xl font-semibold text-gray-800 mb-6">
                 Send a Message
               </h3>
-              <form action="#" method="POST">
+              <form onSubmit={handleSubmit} action="#" method="POST">
                 <div className="mb-4">
                   <label
                     htmlFor="name"
@@ -60,9 +91,11 @@ const ContractSection = () => {
                     Name
                   </label>
                   <input
+                    name="name"
+                    value={addFormData.name}
+                    onChange={handleInputChange}
                     type="text"
                     id="name"
-                    name="name"
                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-yellow-500"
                     placeholder="Your Name"
                     required
@@ -76,9 +109,11 @@ const ContractSection = () => {
                     Email
                   </label>
                   <input
+                    name="email"
+                    value={addFormData.email}
+                    onChange={handleInputChange}
                     type="email"
                     id="email"
-                    name="email"
                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-yellow-500"
                     placeholder="Your Email"
                     required
@@ -94,7 +129,8 @@ const ContractSection = () => {
                   <textarea
                     id="message"
                     name="message"
-                    rows="5"
+                    value={addFormData.message}
+                    onChange={handleInputChange}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-yellow-500"
                     placeholder="Your Message"
                     required

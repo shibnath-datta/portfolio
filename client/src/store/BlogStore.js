@@ -38,30 +38,6 @@ const BlogStore = create((set) => ({
     }
   }
 
-
-
-
-
-  // async deleteProduct(id) {
-  //   let isConfirmed = await DeleteAlert();
-
-  //   console.log(isConfirmed);
-
-  //   if (isConfirmed) {
-  //     let result = await axios.delete(`${baseURL}/delete-product/` + id, {
-  //       withCredentials: true,
-  //     });
-  //     if (result.data.status === true) {
-  //       SuccessToast(result.data.msg);
-  //       return true;
-  //     } else {
-  //       ErrorToast(result.data.msg);
-  //       return false;
-  //     }
-  //   }
-  // }
-
-
 }))
 
 export default BlogStore;
