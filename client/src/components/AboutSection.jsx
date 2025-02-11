@@ -8,7 +8,7 @@ const AboutSection = () => {
           {/* Image Section */}
           <div className="w-full md:w-1/2">
             <img
-              src="https://placehold.co/400"
+              src=""
               alt="About Us"
               className="w-full h-auto rounded-lg shadow-md"
             />
