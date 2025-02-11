@@ -16,7 +16,7 @@ const ContractSection = () => {
       [name]: value,
     });
   };
-
+  console.log(addFormData);
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
@@ -29,7 +29,6 @@ const ContractSection = () => {
     } catch (err) {
       console.log(err);
     }
-    console.log(addFormData);
   };
 
   return (
