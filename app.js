@@ -27,7 +27,7 @@ app.use(cookieParser());
 //app.use(cors({ credentials: true, origin: ["http://localhost:5173",https://portfolio-back-henna.vercel.app/,https://shibnath-portfolio1.netlify.app/, "https://portfolio-l5jv.onrender.com/", "https://portfolio-front-taupe.vercel.app/"] }))
 
 app.use(cors({
-    origin: ['https://portfolio-front-taupe.vercel.app', "http://localhost:5173", "https://portfolio-l5jv.onrender.com/"],
+    origin: ['https://portfolio-front-taupe.vercel.app', 'https://shibnath-portfolio1.netlify.app/', "http://localhost:5173", "https://portfolio-l5jv.onrender.com/"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
