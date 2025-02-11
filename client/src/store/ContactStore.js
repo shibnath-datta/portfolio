@@ -17,6 +17,17 @@ const ContactStore = create((set) => ({
     }
   },
 
+  UpdateContactStatus: async (id, reqBody) => {
+    try {
+      let res = await axios.put(`/api/v1/UpdateContactStatus/` + id, { isRead: reqBody }, { withCredentials: true });
+      if (res?.data['status'] === "success") {
+        return true
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
   ContactRemoveRequest: async (id) => {
     let res = await axios.delete(`/api/v1/DeleteOneContact/` + id, { withCredentials: true });
     if (res?.data['status'] === "success") {

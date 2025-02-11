@@ -1,6 +1,9 @@
 //!Create a Contact Massage
 
 const ContactModel = require("../models/ContactModel");
+const mongoose = require('mongoose');
+
+const ObjectId = mongoose.Types.ObjectId;
 
 const CreateContactService = async (req, res) => {
   try {
@@ -24,5 +27,27 @@ const ContactListService = async () => {
   }
 }
 
+//! Update Contact Status
 
-module.exports = { CreateContactService, ContactListService }
+const UpdateContactStatusService = async (req) => {
+  try {
+    let contactID = new ObjectId(req.params.id);
+    //const { isRead } = req.body;
+    console.log("ID:", contactID)
+    console.log(req.body)
+    let { isRead } = req.body;
+    if (typeof isRead !== 'boolean') {
+      return { status: "fail", message: "Invalid 'isRead' value. Expected a boolean." };
+    }
+
+    await ContactModel.findByIdAndUpdate({ _id: contactID }, { isRead: isRead }, { new: true });
+    return ({ status: "success", "message": "Contact Status Updated Successfully" })
+  }
+  catch (err) {
+    return ({ status: "fail", "Message": err.toString() })
+  }
+}
+
+
+
+module.exports = { CreateContactService, ContactListService, UpdateContactStatusService }

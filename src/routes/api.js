@@ -38,8 +38,13 @@ router.put('/UpdateOneService/:id', AuthVerification, ServiceController.UpdateOn
 
 //! Contact Massage Routes
 router.post('/CreateContact', ContactController.CreateContact)
-
 router.get('/GetAllContacts', ContactController.GetAllContacts)
+router.put('/UpdateContactStatus/:id', ContactController.UpdateContactStatus)
+
+
+
+
+
 
 //! User api
 router.post("/register", UsersController.register)

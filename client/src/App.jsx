@@ -13,6 +13,7 @@ import BlogListPage from "./page/BlogListPage";
 import TeamListPage from "./page/TeamListPage";
 import ServiceListPage from "./page/ServiceListPage";
 import PrivateRouter from "./components/PrivateRouter";
+import ContactListPage from "./page/ContactListPage";
 
 function App() {
   return (
@@ -64,7 +65,6 @@ function App() {
           }
         />
         <Route exact path="/login" element={<LoginPage />} />
-
         <Route
           exact
           path="/dashboard"
@@ -87,7 +87,6 @@ function App() {
             </PrivateRouter>
           }
         />
-
         <Route
           exact
           path="/team-list"
@@ -107,6 +106,17 @@ function App() {
             <PrivateRouter>
               <DasLayout>
                 <ServiceListPage />
+              </DasLayout>
+            </PrivateRouter>
+          }
+        />
+        <Route
+          exact
+          path="/contact-list"
+          element={
+            <PrivateRouter>
+              <DasLayout>
+                <ContactListPage />
               </DasLayout>
             </PrivateRouter>
           }
