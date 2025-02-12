@@ -38,7 +38,6 @@ const ContractSection = () => {
         });
       }
     } catch (err) {
-      console.log(err);
       ErrorToast("An error occurred. Please try again.");
     }
   };

@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 const Layout = ({ children }) => {
   return (
     <>
-      <Toaster />
+      <Toaster position="bottom-center" reverseOrder={false} />
       {/*MenuBar*/}
       <MenuBar />
       <div className="pt-[120px] sm:pt-[80px]">{children}</div>
