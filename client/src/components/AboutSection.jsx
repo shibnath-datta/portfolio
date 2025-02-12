@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AboutSection = () => {
   return (
@@ -8,7 +9,7 @@ const AboutSection = () => {
           {/* Image Section */}
           <div className="w-full md:w-1/2">
             <img
-              src=""
+              src="/img/about.png"
               alt="About Us"
               className="w-full h-auto rounded-lg shadow-md"
             />
@@ -28,9 +29,12 @@ const AboutSection = () => {
               focus is on delivering innovative solutions to help businesses
               grow in the digital landscape.
             </p>
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg shadow-lg">
-              Learn More
-            </button>
+            <Link
+              to="/service"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg shadow-lg"
+            >
+              See our Service
+            </Link>
           </div>
         </div>
       </section>

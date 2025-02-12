@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ContactStore from "../store/ContactStore";
+import { ErrorToast, SuccessToast } from "../utility/Helper";
 
 const ContractSection = () => {
   const { ContactAddRequest } = ContactStore();
@@ -20,14 +21,25 @@ const ContractSection = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      ContactAddRequest(addFormData);
-      setAddFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
+      const response = ContactAddRequest(addFormData);
+
+      // !response
+      //   ? ErrorToast("An error occurred. Please try again.")
+      //   : SuccessToast(`Your Message Sent!`);
+
+      if (!response) {
+        ErrorToast("An error occurred. Please try again.");
+      } else {
+        SuccessToast(`Your Message Sent!`);
+        setAddFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      }
     } catch (err) {
       console.log(err);
+      ErrorToast("An error occurred. Please try again.");
     }
   };
 
@@ -137,7 +149,7 @@ const ContractSection = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-yellow-500 text-white font-medium py-3 rounded-lg hover:bg-yellow-600 transition"
+                  className="w-full bg-yellow-500 text-white font-medium py-3 rounded-lg hover:bg-yellow-600 transition cursor-pointer"
                 >
                   Send Message
                 </button>

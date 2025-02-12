@@ -20,7 +20,7 @@ function BlogSectionHome() {
               </h2>
             </div>
             <a href="/blog">
-              <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md flex items-center gap-2 shadow-md mt-4 md:mt-0">
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md flex items-center gap-2 shadow-md mt-4 md:mt-0 cursor-pointer">
                 View All Blogs <span>➡️</span>
               </button>
             </a>
