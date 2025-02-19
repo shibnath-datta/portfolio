@@ -444,13 +444,13 @@ export const TeamList = () => {
                     <>
                       <button
                         onClick={() => onSaveEdit(item._id)}
-                        className="text-green-600 hover:text-green-900 mr-2"
+                        className="text-green-600 hover:text-green-900 mr-2 cursor-pointer"
                       >
                         Save
                       </button>
                       <button
                         onClick={onCancelEdit}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="text-gray-600 hover:text-gray-900 cursor-pointer"
                       >
                         Cancel
                       </button>
@@ -459,13 +459,13 @@ export const TeamList = () => {
                     <>
                       <button
                         onClick={() => onEditClick(item)}
-                        className="text-indigo-600 hover:text-indigo-900 mr-4"
+                        className="text-indigo-600 hover:text-indigo-900 mr-4 cursor-pointer"
                       >
                         Update
                       </button>
                       <button
                         onClick={() => onRemove(item._id)}
-                        className="text-red-600 hover:text-red-900"
+                        className="text-red-600 hover:text-red-900 cursor-pointer"
                       >
                         Remove
                       </button>

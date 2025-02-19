@@ -74,7 +74,7 @@ const ContactList = () => {
                 <td className="px-6 py-4 text-sm font-medium">
                   <button
                     onClick={() => toggleReadStatus(item._id, item.isRead)}
-                    className={`px-4 py-2 rounded ${
+                    className={`px-4 py-2 rounded cursor-pointer ${
                       item.isRead
                         ? "bg-yellow-500 text-white hover:bg-yellow-600"
                         : "bg-green-500 text-white hover:bg-green-600"
